@@ -74,39 +74,32 @@ You should invoke the RemitaInlinePaymentSDK.getInstance() at any point when mak
 ```java
 public class MainActivity extends AppCompatActivity implements RemitaGatewayPaymentResponseListener {
 
-    Button button;
+    Button btnGenRRR;
+    Button btnProcessRRR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remita_activity_main);
 
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    btnProcessRRR = findViewById(R.id.btnProcessRRR);
+           btnProcessRRR.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
 
-                EditText et_amount = findViewById(R.id.et_amount);
-                String amount = et_amount.getText().toString();
+                   EditText etRRR = findViewById(R.id.etRRR);
+                   String enteredRRR = etRRR.getText().toString();
 
-                String url = RIPGateway.Endpoint.DEMO;
-                String api_key = "QzAwMDAxOTUwNjl8NDMyNTkxNjl8ZTg0MjI2MDg4MjU0NzA2NTY2MTYwNGU1NjNiMjUzYjk4ZDQwZjljZGFiMTVmYTljMDUwMGQ0MDg2MjIyYjEyNTA1ZTE2MTMxNmE3ZjM1OTZmYmJkOTE2MTRiY2NmZTY5NTM4MGQ2MDBlZGJlZmM2ODc2YTc2M2M4MjgyZmFjODc=";
-                String email = "diagboya@systemspecs.com.ng";
-                String currencyCode = "NGN";
-                String firstName = "Iyare";
-                String lastName = "Diagboya";
-                String customerId = "diagboya@systemspecs.com.ng";
-                String phoneNumber = "07031731478";
-                String transactionId = String.valueOf(new Date().getTime());
-                String narration = "Bugatti Chiron 2020";
+                   String url = RIPGateway.Endpoint.DEMO;
+                   String api_key = "QzAwMDAxNjMwNzl8NDA4NDEyMjQ0MHw0ODZkYTZkOTE4NTVhNzMzZmIzZTM5MTU2ZDBjZDYxY2Y4MzY4ODQ1NzRkYzIyOTI2OWQzMTU1M2NlNzdkNGZkZGIyNjI1MzA1ZjZkNzkzYzM2NTE4NzUxNTI0OWVjYjAxODUyNGZmYTM3NjY3M2IwZWNjYTU3OWEwYjE5NGMyNQ==";
+                   String rrr = enteredRRR;
 
-                RemitaInlinePaymentSDK remitaInlinePaymentSDK = RemitaInlinePaymentSDK.getInstance();
-                remitaInlinePaymentSDK.setRemitaGatewayPaymentResponseListener(MainActivity.this);
+                   RemitaInlinePaymentSDK remitaInlinePaymentSDK = RemitaInlinePaymentSDK.getInstance();
+                   remitaInlinePaymentSDK.setRemitaGatewayPaymentResponseListener(MainActivity.this);
 
-                remitaInlinePaymentSDK.initiatePayment(MainActivity.this, url, api_key, email,
-                        amount, currencyCode, firstName, lastName, customerId, phoneNumber, transactionId, narration);
-            }
-        });
+                   remitaInlinePaymentSDK.initiatePayment(MainActivity.this, url, api_key, rrr);
+               }
+           });
     }
 
     @Override
