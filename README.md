@@ -67,8 +67,9 @@ Add  **api 'com.google.code.gson:gson:2.8.2'** to your applications dependencies
 
 # 2.0         TRY IT NOW
 
-You should invoke the RemitaInlinePaymentSDK.getInstance() at any point when making payment:
+![](images/inline_snapshot.JPG)
 
+You should invoke the RemitaInlinePaymentSDK.getInstance() at any point when making payment:
 
 **Sample Code:**
 ```java
@@ -111,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 }
  ```
 
+Where url can be:
+
+**RIPGateway.Endpoint.DEMO** (for testing) and **RIPGateway.Endpoint.PRODUCTION** (for live).
+
+
 # 3.0         TEST CARDS
 ```json
               CARD: 5178 6810 0000 0002,  
@@ -118,9 +124,3 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
               CCV: 000, 
               OTP: 123456
 ```
-
-Where url can be:
-
-**RIPGateway.Endpoint.DEMO** (for testing) and **RIPGateway.Endpoint.PRODUCTION** (for live).
-
-![](images/inline_snapshot.JPG)
