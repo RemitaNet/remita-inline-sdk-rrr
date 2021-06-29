@@ -114,7 +114,9 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 
 Where url can be:
 
-**RIPGateway.Endpoint.DEMO** (for testing) and **RIPGateway.Endpoint.PRODUCTION** (for live).
+**RIPGateway.Endpoint.DEMO** (for testing)  
+                    OR  
+**RIPGateway.Endpoint.PRODUCTION** (for live).
 
 
 # 3.0         TEST CARDS
