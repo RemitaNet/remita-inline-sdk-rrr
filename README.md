@@ -111,6 +111,13 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 }
  ```
 
+# 3.0         TEST CARDS
+```json
+              CARD: 5178 6810 0000 0002,  
+              Expire Date : 05/30,  
+              CCV: 000, 
+              OTP: 123456
+```
 
 Where url can be:
 

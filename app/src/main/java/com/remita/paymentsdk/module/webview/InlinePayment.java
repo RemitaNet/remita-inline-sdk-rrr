@@ -16,7 +16,7 @@ public class InlinePayment {
                 "\t\t\t\tcustomFields: [ \n" +
                 "\t\t\t\t\t{ \n" +
                 "\t\t\t\t\t\tname: \"rrr\", \n" +
-                "\t\t\t\t\t\tvalue: 290008227762\n" +
+                "\t\t\t\t\t\tvalue:'" + rrr + "'\n" +
                 "\t\t\t\t\t} \n" +
                 "\t\t\t\t ]\n" +
                 "\t\t\t}" + ",\n" +
