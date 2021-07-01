@@ -26,7 +26,7 @@ The following pages outlines the steps to integrating Remita Inline Payment SDK 
  
 
 **Step 3:** Select **Modules** and click the &quot; **+**&quot; under Modules section to add the &quot;rip-sdk.aar&quot; to your project.
-Note: You can find the rip-sdk.aar at: https://github.com/RemitaNet/remita-android/tree/master/aar
+Note: You can find the rip-sdk.aar at: https://github.com/RemitaNet/remita-inline-sdk-rrr-android/tree/main/aar
 
  ![](images/modules.JPG)
 
