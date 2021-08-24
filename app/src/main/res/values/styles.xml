@@ -15,7 +15,9 @@
         <item name="android:background">@drawable/remita_sdk_tab_color_selector</item>
     </style>
     <!-- Base application theme. -->
-    <style name="RemitaAppTheme" parent="Theme.AppCompat.Light.Dialog">
+<!--    <style name="RemitaAppTheme" parent="Theme.AppCompat.Light.Dialog">-->
+<!--    <style name="RemitaAppTheme" parent="Theme.AppCompat.DayNight.Dialog">-->
+    <style name="RemitaAppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

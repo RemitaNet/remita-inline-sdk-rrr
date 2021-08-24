@@ -1,11 +1,13 @@
 package com.remita.paymentsdk.module.webview;
 
+import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.ConsoleMessage;
+import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -17,12 +19,12 @@ import android.widget.ProgressBar;
 
 import com.remita.paymentsdk.R;
 import com.remita.paymentsdk.core.RemitaInlinePaymentSDK;
-import com.remita.paymentsdk.core.RemitaSetup;
 import com.remita.paymentsdk.core.ResponseCode;
 import com.remita.paymentsdk.data.MerchantData;
 import com.remita.paymentsdk.data.PaymentResponse;
 import com.remita.paymentsdk.data.PaymentResponseData;
 import com.remita.paymentsdk.util.JsonUtil;
+import com.remita.paymentsdk.util.LoggerUtil;
 import com.remita.paymentsdk.util.RIPGateway;
 import com.remita.paymentsdk.util.StringUtils;
 
@@ -33,36 +35,50 @@ public class InlinePaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.inline_webview_activity);
-        webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
 
+        webView = findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setAllowFileAccess(true);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 String message = consoleMessage.message();
 
-                PaymentResponse paymentResponse = new PaymentResponse();
+                PaymentResponse paymentResponse = null;
                 PaymentResponseData paymentResponseData = null;
+
                 try {
+                    paymentResponse = new PaymentResponse();
+                    if (message.contains("paymentReference")) {
 
-                    paymentResponseData = JsonUtil.fromJson(message, PaymentResponseData.class);
+                        paymentResponseData = JsonUtil.fromJson(message, PaymentResponseData.class);
 
-                    if (!StringUtils.isEmpty(paymentResponseData.getPaymentReference())) {
-                        paymentResponse.setResponseCode(ResponseCode.SUCCESSFUL.getCode());
-                        paymentResponse.setResponseMessage(ResponseCode.SUCCESSFUL.getDescription());
-                        paymentResponse.setPaymentResponseData(paymentResponseData);
-                        RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
-                    } else {
-                        paymentResponse.setResponseCode(ResponseCode.FAILED.getCode());
-                        paymentResponse.setResponseMessage(ResponseCode.FAILED.getDescription());
-                        paymentResponse.setPaymentResponseData(paymentResponseData);
-                        RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
+                        if (!StringUtils.isEmpty(paymentResponseData.getPaymentReference())) {
+                            paymentResponse.setResponseCode(ResponseCode.SUCCESSFUL.getCode());
+                            paymentResponse.setResponseMessage(ResponseCode.SUCCESSFUL.getDescription());
+                            paymentResponse.setPaymentResponseData(paymentResponseData);
+                            RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
+                        } else {
+                            paymentResponse.setResponseCode(ResponseCode.FAILED.getCode());
+                            paymentResponse.setResponseMessage(ResponseCode.FAILED.getDescription());
+                            paymentResponse.setPaymentResponseData(paymentResponseData);
+                            RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
+                        }
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
+                    finish();
+                    paymentResponse.setResponseCode(ResponseCode.FAILED.getCode());
+                    paymentResponse.setResponseMessage(ResponseCode.FAILED.getDescription());
+                    paymentResponse.setPaymentResponseData(paymentResponseData);
+                    RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
                 }
 
                 if (message.contains("closed")) {
@@ -76,12 +92,16 @@ public class InlinePaymentActivity extends AppCompatActivity {
             public void onCloseWindow(WebView window) {
                 super.onCloseWindow(window);
             }
-        });
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLoadWithOverviewMode(true);
 
-        MerchantData merchantData = (MerchantData) getIntent().getSerializableExtra(RIPGateway.Keys.MERCHANT_DETAILS);// RemitaSetup.getMerchantData();
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                return super.onJsAlert(view, url, message, result);
+            }
+        });
+
+        MerchantData merchantData = (MerchantData) getIntent().getSerializableExtra(RIPGateway.Keys.MERCHANT_DETAILS);//
         String inlineHtml = InlinePayment.initRequest(merchantData.getUrl(), merchantData.getKey(), merchantData.getRRR());
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -92,6 +112,11 @@ public class InlinePaymentActivity extends AppCompatActivity {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 return super.shouldInterceptRequest(view, request);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
             }
 
             @Override
@@ -108,15 +133,15 @@ public class InlinePaymentActivity extends AppCompatActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
+                LoggerUtil.log("onReceivedError WebResourceRequest: " + request.toString());
             }
         });
-
         webView.loadData(inlineHtml, "text/HTML", "UTF-8");
     }
 
     @Override
     public void onBackPressed() {
-
+        super.onBackPressed();
     }
 }
 

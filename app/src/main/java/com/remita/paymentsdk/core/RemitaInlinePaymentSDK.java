@@ -40,7 +40,7 @@ public class RemitaInlinePaymentSDK {
             Log.e(RemitaInlinePaymentSDK.class.getName(), "Please enter an rrr");
             return;
         }
-        if (Long.parseLong(rrr) <= 12) {
+        if (Long.parseLong(rrr) < 12) {
             Log.e(RemitaInlinePaymentSDK.class.getName(), "Invalid rrr");
             return;
         }

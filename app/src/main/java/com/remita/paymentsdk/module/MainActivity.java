@@ -17,7 +17,6 @@ import com.remita.paymentsdk.util.RIPGateway;
 
 public class MainActivity extends AppCompatActivity implements RemitaGatewayPaymentResponseListener {
 
-    Button btnGenRRR;
     Button btnProcessRRR;
 
     @Override
@@ -25,19 +24,10 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remita_activity_main);
 
-        btnGenRRR = findViewById(R.id.btnGenRRR);
-        btnGenRRR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-
         btnProcessRRR = findViewById(R.id.btnProcessRRR);
         btnProcessRRR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 EditText etRRR = findViewById(R.id.etRRR);
                 String enteredRRR = etRRR.getText().toString();
 
@@ -47,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 
                 RemitaInlinePaymentSDK remitaInlinePaymentSDK = RemitaInlinePaymentSDK.getInstance();
                 remitaInlinePaymentSDK.setRemitaGatewayPaymentResponseListener(MainActivity.this);
-
                 remitaInlinePaymentSDK.initiatePayment(MainActivity.this, url, api_key, rrr);
             }
         });
@@ -55,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 
     @Override
     public void onPaymentCompleted(PaymentResponse paymentResponse) {
-
         Log.v("+++ Response: ", JsonUtil.toJson(paymentResponse));
         Toast.makeText(this, JsonUtil.toJson(paymentResponse), Toast.LENGTH_LONG);
     }

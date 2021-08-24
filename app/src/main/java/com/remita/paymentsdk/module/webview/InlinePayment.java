@@ -3,9 +3,10 @@ package com.remita.paymentsdk.module.webview;
 public class InlinePayment {
     public static String initRequest(String url, String key, String rrr) {
 
-        String script = "<!DOCTYPE html>\n" +
+        String script ="<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n"
-                + "<header><meta name=\"viewport\" content=\"initial-scale=1.0\"/></header>" +
+                + "<header><meta name=\"viewport\" content=\"initial-scale=1.0\"/>" +
+                "</header>" +
                 "<body  onload=\"makePayment()\">\n" +
                 "    <script>\n" +
                 "       function makePayment() {\n" +
@@ -33,8 +34,8 @@ public class InlinePayment {
                 "                paymentEngine.openIframe();\n" +
                 "        }\n" +
                 "    </script>\n" +
-                "   \n" +
-                "     <script type=\"text/javascript\" src=\"" + url + "/payment/v1/remita-pay-inline.bundle.js\"></script>\n" +
+                "   \n" + "<script type=\"text/javascript\" src=\"" + url + "/payment/v1/remita-pay-inline.bundle.js\"></script>\n" +
+
                 "</body>\n" +
                 "\n" +
                 "</html>\n";
