@@ -2,6 +2,7 @@
 
 # Remita Inline Payment SDK
 
+![](images/inline_snapshot.JPG)
 
 ## Table of Contents
 
@@ -66,8 +67,6 @@ Add  **api 'com.google.code.gson:gson:2.8.2'** to your applications dependencies
 
 
 # 2.0         TRY IT NOW
-
-![](images/inline_snapshot.JPG)
 
 You should invoke the RemitaInlinePaymentSDK.getInstance() at any point when making payment:
 
