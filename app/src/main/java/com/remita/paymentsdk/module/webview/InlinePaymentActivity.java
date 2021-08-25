@@ -95,10 +95,6 @@ public class InlinePaymentActivity extends AppCompatActivity {
                 return super.onJsAlert(view, url, message, result);
             }
         });
-
-        MerchantData merchantData = (MerchantData) getIntent().getSerializableExtra(RIPGateway.Keys.MERCHANT_DETAILS);//
-        String inlineHtml = InlinePayment.initRequest(merchantData.getUrl(), merchantData.getKey(), merchantData.getRRR());
-
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -133,7 +129,11 @@ public class InlinePaymentActivity extends AppCompatActivity {
                 LoggerUtil.log("onReceivedError WebResourceRequest: " + request.toString());
             }
         });
-        webView.loadData(inlineHtml, "text/HTML", "UTF-8");
+
+        MerchantData merchantData = (MerchantData) getIntent().getSerializableExtra(RIPGateway.Keys.MERCHANT_DETAILS);//
+        String inlineHtml = InlinePayment.initRequest(merchantData.getUrl(), merchantData.getKey(), merchantData.getRRR());
+
+        webView.loadDataWithBaseURL(merchantData.getUrl(), inlineHtml, "text/HTML", "UTF-8", null);
     }
 
     @Override

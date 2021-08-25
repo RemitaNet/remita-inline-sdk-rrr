@@ -31,8 +31,10 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
                 EditText etRRR = findViewById(R.id.etRRR);
                 String enteredRRR = etRRR.getText().toString();
 
-                String url = RIPGateway.Endpoint.DEMO;
-                String api_key = "QzAwMDAxNjMwNzl8NDA4NDEyMjQ0MHw0ODZkYTZkOTE4NTVhNzMzZmIzZTM5MTU2ZDBjZDYxY2Y4MzY4ODQ1NzRkYzIyOTI2OWQzMTU1M2NlNzdkNGZkZGIyNjI1MzA1ZjZkNzkzYzM2NTE4NzUxNTI0OWVjYjAxODUyNGZmYTM3NjY3M2IwZWNjYTU3OWEwYjE5NGMyNQ==";
+                String url = RIPGateway.Endpoint.PRODUCTION;
+//                String api_key = "QzAwMDAxNjMwNzl8NDA4NDEyMjQ0MHw0ODZkYTZkOTE4NTVhNzMzZmIzZTM5MTU2ZDBjZDYxY2Y4MzY4ODQ1NzRkYzIyOTI2OWQzMTU1M2NlNzdkNGZkZGIyNjI1MzA1ZjZkNzkzYzM2NTE4NzUxNTI0OWVjYjAxODUyNGZmYTM3NjY3M2IwZWNjYTU3OWEwYjE5NGMyNQ==";
+                String api_key = "U09MRHwyNjk5MzI0MjIzfDc3MGFmZTEyYzI5YTE3ZDgwYjM5ZGEzN2FmMTJiNWY1NmExMGRlZjgzMmMwMWZmOTc3NTJlOTEzNzhkNzEwYmE3ZDc4MTE2YTkyMGI0MzIxNDkwYjUwZWUyMTdhZGU2NWJiOWM1ZDYwM2IyNmUyNzE5MDIwZGJjMjQyZDAyYTc3";
+
                 String rrr = enteredRRR;
 
                 RemitaInlinePaymentSDK remitaInlinePaymentSDK = RemitaInlinePaymentSDK.getInstance();
