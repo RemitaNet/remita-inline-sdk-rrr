@@ -4,4 +4,6 @@ import com.remita.paymentsdk.data.PaymentResponse;
 
 public interface RemitaGatewayPaymentResponseListener {
     void onPaymentCompleted(PaymentResponse paymentResponse);
+
+    void onPaymentFailed(PaymentResponse paymentResponse);
 }

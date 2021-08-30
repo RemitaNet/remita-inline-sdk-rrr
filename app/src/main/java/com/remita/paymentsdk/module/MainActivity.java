@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.remita.paymentsdk.R;
 import com.remita.paymentsdk.core.RemitaInlinePaymentSDK;
@@ -45,7 +44,11 @@ public class MainActivity extends AppCompatActivity implements RemitaGatewayPaym
 
     @Override
     public void onPaymentCompleted(PaymentResponse paymentResponse) {
-        Log.v("+++ Response: ", JsonUtil.toJson(paymentResponse));
-        Toast.makeText(this, JsonUtil.toJson(paymentResponse), Toast.LENGTH_LONG);
+        Log.v("+++ Response", JsonUtil.toJson(paymentResponse));
+    }
+
+    @Override
+    public void onPaymentFailed(PaymentResponse paymentResponse) {
+        Log.v("+++ Response", JsonUtil.toJson(paymentResponse));
     }
 }

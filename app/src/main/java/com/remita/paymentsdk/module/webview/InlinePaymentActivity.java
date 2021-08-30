@@ -5,6 +5,7 @@ import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.JsResult;
@@ -53,33 +54,33 @@ public class InlinePaymentActivity extends AppCompatActivity {
 
                 try {
                     paymentResponse = new PaymentResponse();
-                    if (message.contains("paymentReference")) {
 
+                    if (message.contains("paymentReference") && message.contains("transactionId")) {
                         paymentResponseData = JsonUtil.fromJson(message, PaymentResponseData.class);
-
-                        if (!StringUtils.isEmpty(paymentResponseData.getPaymentReference())) {
+                        if (!StringUtils.isEmpty(paymentResponseData.getTransactionId())) {
                             paymentResponse.setResponseCode(ResponseCode.SUCCESSFUL.getCode());
                             paymentResponse.setResponseMessage(ResponseCode.SUCCESSFUL.getDescription());
                             paymentResponse.setPaymentResponseData(paymentResponseData);
                             RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
                         } else {
+                            paymentResponseData = JsonUtil.fromJson(message, PaymentResponseData.class);
                             paymentResponse.setResponseCode(ResponseCode.FAILED.getCode());
                             paymentResponse.setResponseMessage(ResponseCode.FAILED.getDescription());
                             paymentResponse.setPaymentResponseData(paymentResponseData);
-                            RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
+                            RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentFailed(paymentResponse);
                         }
                     }
+                    if (message.contains("onClose")) {
+                        finish();
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     finish();
                     paymentResponse.setResponseCode(ResponseCode.FAILED.getCode());
                     paymentResponse.setResponseMessage(ResponseCode.FAILED.getDescription());
                     paymentResponse.setPaymentResponseData(paymentResponseData);
-                    RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentCompleted(paymentResponse);
-                }
-
-                if (message.contains("closed")) {
-                    finish();
+                    RemitaInlinePaymentSDK.getInstance().getRemitaGatewayPaymentResponseListener().onPaymentFailed(paymentResponse);
                 }
 
                 return super.onConsoleMessage(consoleMessage);
@@ -98,12 +99,12 @@ public class InlinePaymentActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                progressBar.setVisibility(View.VISIBLE);
                 return false;
             }
 
             @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest
+                    request) {
                 return super.shouldInterceptRequest(view, request);
             }
 
@@ -124,7 +125,8 @@ public class InlinePaymentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            public void onReceivedError(WebView view, WebResourceRequest
+                    request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
                 LoggerUtil.log("onReceivedError WebResourceRequest: " + request.toString());
             }

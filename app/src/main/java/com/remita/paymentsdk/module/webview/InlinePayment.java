@@ -28,7 +28,7 @@ public class InlinePayment {
                 "                        console.log(JSON.stringify(response));\n" +
                 "                    },\n" +
                 "                    onClose: function () {\n" +
-                "                        console.log(\"closed\");\n" +
+                "                        console.log(\"onClose\");\n" +
                 "                    },                 \n" +
                 "                });\n" +
                 "                paymentEngine.openIframe();\n" +
