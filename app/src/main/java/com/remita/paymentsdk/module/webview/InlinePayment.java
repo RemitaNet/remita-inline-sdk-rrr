@@ -39,7 +39,6 @@ public class InlinePayment {
                 "</body>\n" +
                 "\n" +
                 "</html>\n";
-
         return script;
     }
 }
