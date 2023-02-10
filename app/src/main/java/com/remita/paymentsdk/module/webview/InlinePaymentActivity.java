@@ -1,9 +1,11 @@
 package com.remita.paymentsdk.module.webview;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -120,15 +122,24 @@ public class InlinePaymentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError er) {
-                handler.proceed();
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest
-                    request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                LoggerUtil.log("onReceivedError WebResourceRequest: " + request.toString());
+            public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError er) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                builder.setTitle("Error");
+                builder.setMessage("Invalid SSL Certificate ");
+                builder.setPositiveButton("continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        handler.proceed();
+                    }
+                });
+                builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        handler.cancel();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
