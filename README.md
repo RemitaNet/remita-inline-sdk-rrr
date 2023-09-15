@@ -1,71 +1,57 @@
-
 # Remita Inline Payment SDK
+
+---
+- [Overview](#Overview)
+- [Installation](#Installation)
+- [Usage](#Usage)
+- [Contributing](#Contributing)
+- [License](License)
+
+---
+## Overview
+The following pages outlines the steps to integrating Remita Inline Payment SDK to your app.
 
 ![](images/inline_snapshot.JPG)
 
-## Table of Contents
+---
 
-**OVERVIEW**
+## Installation
+1. Go to **File** in Menu bar
 
-**1.0  ANDROID SDK SETUP**
-
-**2.0  TRY IT NOW**
-
-
-## OVERVIEW
-
-The following pages outlines the steps to integrating Remita Inline Payment SDK to your app.
-
-## 1.0         Note: This setup is done on Android Studio 3.5
-
-**Step 1:** Go to **File** in Menu bar
-
-**Step 2:** Click on **Project Structure**
-
+2. Click on **Project Structure**
 ![](images/project_structure.JPG)
- 
 
-**Step 3:** Select **Modules** and click the &quot; **+**&quot; under Modules section to add the &quot;rip-sdk.aar&quot; to your project.
+3. Select **Modules** and click the &quot; **+**&quot; under Modules section to add the &quot;rip-sdk.aar&quot; to your project.
 Note: You can find the rip-sdk.aar at: https://github.com/RemitaNet/remita-inline-sdk-rrr-android/tree/main/aar
+![](images/modules.JPG)
 
- ![](images/modules.JPG)
-
-
-
-**Step 4:** Select Import .JAR/.AAR Package
-
+4. Select Import .JAR/.AAR Package
  ![](images/aar_location.JPG)
 
-
-
-**Step 5:** Locate rip-sdk.aar and click ok
+5. Locate rip-sdk.aar and click ok
  ![](images/import_module.JPG)
 
-
-**Step 6:** Select **Dependencies** and then select **app** then click on &quot; **+&quot;** under **Declared Dependencies**
+6.Select **Dependencies** and then select **app** then click on &quot; **+&quot;** under **Declared Dependencies**
 ![](images/dependencies.JPG)
  
-
-**Step 7:** Select **Module Dependency**
+7. Select **Module Dependency**
 ![](images/module_dependency.JPG)
  
-**Step 8:** Select the **rip-sdk** module and click &#39;OK&#39;.
+8. Select the **rip-sdk** module and click &#39;OK&#39;.
 ![](images/select_rip-sdk.JPG)
  
-**Step 9:** Click on **Apply/Ok.**
+9. Click on **Apply/Ok.**
 ![](images/select_rip-sdk_2.JPG)
 
-**Step 10:** Rebuild project, you should see **implementation project(path: &#39;:rip-sdk&#39;)** in your dependencies block.
+10. Rebuild project, you should see **implementation project(path: &#39;:rip-sdk&#39;)** in your dependencies block.
 ![](images/rebuild.JPG)
 
-**Step 11:** Just in case
+11. Just in case
 Add  **api 'com.google.code.gson:gson:2.8.2'** to your applications dependencies (If you haven't).
- 
-** **
 
+---
 
-
-# 2.0         TRY IT NOW
+## Usage
 
 You should invoke the RemitaInlinePaymentSDK.getInstance() at any point when making payment:
 
@@ -116,11 +102,35 @@ Where url can be:
                     OR  
 **RIPGateway.Endpoint.PRODUCTION** (for live).
 
-
-# 3.0         TEST CARDS
+### Test Cards
 ```json
               CARD: 5178 6810 0000 0002,  
               Expire Date : 05/30,  
               CCV: 000, 
               OTP: 123456
 ```
+
+### Useful links
+Join our Slack Developer/Support channel on [Slack.](http://bit.ly/RemitaDevSlack)
+    
+### Support
+For all other support needs, support@remita.net
+
+---
+
+## Contributing
+To contribute to this repo, follow these guidelines for creating issues, proposing new features, and submitting pull requests:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b "feature-name"`
+3. Make your changes and commit: `git commit -m "added some new features"`
+4. Push your changes: `git push origin feature-name`
+5. Submit a Pull Request (PR).
+
+Thank you!
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
